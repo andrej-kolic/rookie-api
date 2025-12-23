@@ -24,10 +24,11 @@ Parameters:
   NodeRuntime:
     Type: String
     Description: 'Node.js runtime version for Lambda'
-    Default: 'nodejs20.x'
+    Default: 'nodejs22.x'
     AllowedValues:
       - 'nodejs18.x'
       - 'nodejs20.x'
+      - 'nodejs22.x'
 
   LambdaMemory:
     Type: Number

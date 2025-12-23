@@ -10,7 +10,7 @@
     "DomainName": "andrejkolic.com",
     "SubDomain": "kraken-proxy",
     "HostedZoneId": "Z00295123IDZ7CVMX671W",
-    "NodeRuntime": "nodejs20.x",
+    "NodeRuntime": "nodejs22.x",
     "LambdaMemory": "512",
     "LambdaTimeout": "30"
   }
