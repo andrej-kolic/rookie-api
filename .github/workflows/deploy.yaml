@@ -52,7 +52,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        working-directory: apps/kraken-proxy
+        # working-directory: apps/kraken-proxy
         run: pnpm install --frozen-lockfile
 
       - name: Configure AWS credentials
@@ -65,4 +65,4 @@ jobs:
         uses: ./infra/aws/actions/deploy
         with:
           action: ${{ github.event.inputs.action || 'update' }}
-          working-directory: infra/aws
+          # working-directory: infra/aws
