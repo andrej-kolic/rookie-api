@@ -17,8 +17,8 @@ runs:
     - name: Validate action
       shell: bash
       run: |
-        if [[ ! "${{ inputs.action }}" =~ ^(infra|update|outputs)$ ]]; then
-          echo "::error::Invalid action. Must be one of: infra, update, outputs"
+        if [[ ! "${{ inputs.action }}" =~ ^(infra|update|outputs|generate-secret)$ ]]; then
+          echo "::error::Invalid action. Must be one of: infra, update, outputs, generate-secret"
           exit 1
         fi
 

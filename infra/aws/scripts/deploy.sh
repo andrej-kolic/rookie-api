@@ -24,12 +24,36 @@ readonly TEMPLATES_DIR="${PROJECT_DIR}/templates"
 readonly CONFIG_FILE="${PROJECT_DIR}/deploy-config.json"
 readonly KRAKEN_PROXY_DIR="${PROJECT_DIR}/../../apps/kraken-proxy"
 
-readonly APP_SECRET_VAR="${APP_SECRET:-'changeme'}"
-
-echo "APP_SECRET_VAR: ${APP_SECRET_VAR}"
+# Generate or validate AppSecret (must be at least 32 characters for encryption)
+get_app_secret() {
+  if [[ -n "${APP_SECRET:-}" ]] && [[ ${#APP_SECRET} -ge 32 ]]; then
+    echo "${APP_SECRET}"
+    return 0
+  else
+    error "APP_SECRET environment variable is required and must be at least 32 characters long."
+    return 1
+  fi
+}
 
 #
-# Load configuration
+# Generate and display a new AppSecret
+#
+generate_secret() {
+  section "Generating New AppSecret"
+
+  local secret
+  secret=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-32)
+
+  success "Generated new AppSecret (length: ${#secret})"
+  echo ""
+  echo "🔐 AppSecret: ${secret}"
+  echo ""
+  warning "Save this secret securely! Use it as APP_SECRET environment variable."
+  echo "Example: export APP_SECRET=\"${secret}\""
+}
+
+#
+# Load deployment configuration
 #
 load_config() {
   if [[ ! -f "${CONFIG_FILE}" ]]; then
@@ -167,6 +191,13 @@ EOF
 deploy_infra() {
   section "Deploying CloudFormation Infrastructure"
 
+  if ! APP_SECRET_VAR=$(get_app_secret); then
+    exit 1
+  fi
+  readonly APP_SECRET_VAR
+
+  echo "APP_SECRET_VAR: ${APP_SECRET_VAR} (length: ${#APP_SECRET_VAR})"
+
   check_aws_cli
   check_jq
 
@@ -288,23 +319,29 @@ Kraken Proxy AWS Deployment Script
 Usage: $0 <action>
 
 Actions:
-  infra      Deploy CloudFormation infrastructure
-  update     Update Lambda function code only
-  outputs    Display stack outputs
-  validate   Validate CloudFormation templates
-  help       Display this help message
+  infra           Deploy CloudFormation infrastructure
+  update          Update Lambda function code only
+  outputs         Display stack outputs
+  validate        Validate CloudFormation templates
+  generate-secret Generate and display a new AppSecret
+  help            Display this help message
 
 Examples:
-  $0 infra          # Deploy complete infrastructure
-  $0 update         # Update Lambda code after changes
-  $0 outputs        # View deployment information
-  $0 validate       # Validate templates before deployment
+  $0 infra                # Deploy complete infrastructure
+  $0 update               # Update Lambda code after changes
+  $0 outputs              # View deployment information
+  $0 validate             # Validate templates before deployment
+  $0 generate-secret      # Generate a new secure AppSecret
 
 Configuration:
   Edit deploy-config.json to configure:
   - Domain name and subdomain
   - Lambda settings (memory, timeout)
   - AWS region
+
+Environment Variables:
+  APP_SECRET    Required application secret (min 32 characters)
+                Generate with: ./scripts/deploy.sh generate-secret
 
 EOF
 }
@@ -321,8 +358,8 @@ main() {
 
   local action="$1"
 
-  # Load configuration for all actions except help
-  if [[ "${action}" != "help" ]]; then
+  # Load configuration for all actions except help and generate-secret
+  if [[ "${action}" != "help" && "${action}" != "generate-secret" ]]; then
     load_config
   fi
 
@@ -337,7 +374,11 @@ main() {
       get_outputs
       ;;
     validate)
+      echo "Validating CloudFormation templates..."
       validate_templates
+      ;;
+    generate-secret)
+      generate_secret
       ;;
     help)
       show_help
