@@ -1,0 +1,47 @@
+{
+	"folders": [
+		{
+			"name": "✨ rookie-api",
+			"path": "."
+		},
+		{
+			"name": "🚀 kraken-proxy",
+			"path": "apps/kraken-proxy"
+		},
+		{
+			"name": "🛠️ @repo/infra-aws",
+			"path": "infra/aws"
+		},
+		{
+			"name": "📦 @repo/eslint-config",
+			"path": "packages/eslint-config"
+		},
+		{
+			"name": "📦 @repo/typescript-config",
+			"path": "packages/typescript-config"
+		}
+	],
+	"settings": {
+		"postman.settings.dotenv-detection-notification-visibility": false,
+		"workbench.colorCustomizations": {
+			"activityBar.activeBackground": "#5c2017",
+			"activityBar.background": "#5c2017",
+			"activityBar.foreground": "#e7e7e7",
+			"activityBar.inactiveForeground": "#e7e7e799",
+			"activityBarBadge.background": "#20802c",
+			"activityBarBadge.foreground": "#e7e7e7",
+			"commandCenter.border": "#e7e7e799",
+			"sash.hoverBorder": "#5c2017",
+			"statusBar.background": "#33120d",
+			"statusBar.foreground": "#e7e7e7",
+			"statusBarItem.hoverBackground": "#5c2017",
+			"statusBarItem.remoteBackground": "#33120d",
+			"statusBarItem.remoteForeground": "#e7e7e7",
+			"titleBar.activeBackground": "#33120d",
+			"titleBar.activeForeground": "#e7e7e7",
+			"titleBar.inactiveBackground": "#33120d99",
+			"titleBar.inactiveForeground": "#e7e7e799"
+		},
+		"peacock.color": "#33120d"
+	}
+}
