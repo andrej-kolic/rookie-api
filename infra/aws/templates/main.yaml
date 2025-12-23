@@ -48,7 +48,6 @@ Parameters:
     Type: String
     Description: 'Application secret for encryption (min 32 characters)'
     NoEcho: true
-    Default: 'changeme-production-secret-32-chars-minimum!'
     MinLength: 32
 
 Metadata:
