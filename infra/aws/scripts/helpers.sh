@@ -12,6 +12,7 @@ readonly COLOR_GREEN='\033[0;32m'
 readonly COLOR_YELLOW='\033[1;33m'
 readonly COLOR_BLUE='\033[0;34m'
 readonly COLOR_CYAN='\033[0;36m'
+readonly COLOR_GREY='\033[1;30m'
 readonly COLOR_RESET='\033[0m'
 
 #
@@ -27,6 +28,10 @@ warning() {
 
 info() {
   echo -e "${COLOR_BLUE}ℹ $*${COLOR_RESET}"
+}
+
+debug() {
+  echo -e "${COLOR_GREY}ℹ $*${COLOR_RESET}"
 }
 
 success() {

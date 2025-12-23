@@ -31,9 +31,17 @@ load_config() {
   GITHUB_ORG=$(jq -r '.oidc.github_org' "${CONFIG_FILE}")
   GITHUB_REPO=$(jq -r '.oidc.github_repo' "${CONFIG_FILE}")
   PROVIDER_ARN=$(jq -r '.oidc.provider_arn // empty' "${CONFIG_FILE}")
-  CREATE_PROVIDER=$(jq -r '.oidc.create_provider // true' "${CONFIG_FILE}")
+  # CREATE_PROVIDER=$(jq -r '.oidc.create_provider // true' "${CONFIG_FILE}")
 
   OIDC_STACK_NAME="${PROJECT_NAME}-github-oidc"
+
+  debug "Configuration Loaded:"
+  debug "  Project Name: ${PROJECT_NAME}"
+  debug "  Region: ${REGION}"
+  debug "  GitHub Org: ${GITHUB_ORG}"
+  debug "  GitHub Repo: ${GITHUB_REPO}"
+  debug "  Provider ARN: ${PROVIDER_ARN:-<not set>}"
+  # debug "  Create Provider: ${CREATE_PROVIDER}"
 
   info "Loaded OIDC configuration for: ${GITHUB_ORG}/${GITHUB_REPO}"
 }
@@ -46,6 +54,7 @@ check_oidc_provider() {
 
   if [[ -n "${PROVIDER_ARN}" ]]; then
     info "Using configured OIDC provider: ${PROVIDER_ARN}"
+    CREATE_PROVIDER="false"
     return 0
   fi
 
