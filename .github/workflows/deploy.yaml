@@ -62,7 +62,7 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy
-        uses: ./.github/actions/deploy
+        uses: ./infra/aws/actions/deploy
         with:
           action: ${{ github.event.inputs.action || 'update' }}
           working-directory: infra/aws

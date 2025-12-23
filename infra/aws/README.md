@@ -78,7 +78,7 @@ cd infra/aws
 **Add GitHub Secret**:
 
 - Go to **Settings → Secrets and variables → Actions**
-- Create secret: `KRAKEN_PROXY_AWS_ROLE_ARN`
+- Create secret: `AWS_ROLE_ARN`
 - Value: The Role ARN from setup output
 
 ### 3. Deploy Infrastructure

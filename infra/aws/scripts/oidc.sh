@@ -143,7 +143,7 @@ show_setup_instructions() {
 1. Add the following secret to your GitHub repository:
    Repository → Settings → Secrets and variables → Actions → New repository secret
 
-   Name:  KRAKEN_PROXY_AWS_ROLE_ARN
+   Name:  AWS_ROLE_ARN
    Value: ${role_arn}
 
 2. Update deploy-config.json if needed:

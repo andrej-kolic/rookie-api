@@ -217,7 +217,7 @@ Uses `@vendia/serverless-express` to wrap Express app:
 
 **Stack deployment failures**: Check CloudFormation events, often certificate validation issues
 **Lambda code not updating**: Verify build succeeded in `apps/kraken-proxy/dist/`
-**OIDC authentication errors**: Ensure GitHub secret `KRAKEN_PROXY_AWS_ROLE_ARN` is set correctly
+**OIDC authentication errors**: Ensure GitHub secret `AWS_ROLE_ARN` is set correctly
 **Function URL 403**: Check Lambda resource policy allows public invocation
 **Domain resolution issues**: Verify hosted zone configuration and DNS propagation (5-10 min)
 **Cold start issues**: Consider increasing Lambda memory or using provisioned concurrency
@@ -226,7 +226,7 @@ Uses `@vendia/serverless-express` to wrap Express app:
 
 - **Provider**: Reuses existing (one per AWS account)
 - **Role**: New role specific to kraken-proxy with Lambda/CloudFront permissions
-- **Secret name**: `KRAKEN_PROXY_AWS_ROLE_ARN` (different from static site)
+- **Secret name**: `AWS_ROLE_ARN` (different from static site)
 
 ## Security Considerations
 
