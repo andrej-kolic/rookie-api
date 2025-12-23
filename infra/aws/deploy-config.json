@@ -4,7 +4,7 @@
   "oidc": {
     "provider_arn": "arn:aws:iam::629994690329:oidc-provider/token.actions.githubusercontent.com",
     "github_org": "andrej-kolic",
-    "github_repo": "rookie-trader"
+    "github_repo": "rookie-api"
   },
   "parameters": {
     "DomainName": "andrejkolic.com",
