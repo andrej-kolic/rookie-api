@@ -78,15 +78,9 @@ Resources:
           };
       Environment:
         Variables:
-          # TODO: extract to separate file
           NODE_ENV: production
           LOG_LEVEL: info
           APP_SECRET: !Ref AppSecret
-          # Prevent ts-kraken from trying to load .env file
-          DOTENV_CONFIG_PATH: /dev/null
-          # Dummy credentials to prevent ts-kraken from crashing on init
-          KRAKEN_API_KEY: dummy
-          KRAKEN_API_SECRET: dummy
       Tags:
         - Key: Project
           Value: !Ref ProjectName
