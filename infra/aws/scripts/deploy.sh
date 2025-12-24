@@ -17,12 +17,14 @@ set -euo pipefail
 # shellcheck source=./helpers.sh
 source "$(dirname "$0")/helpers.sh"
 
+# Disable automatic pagination for AWS CLI commands
+export AWS_PAGER=""
+
 # Constants
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 readonly TEMPLATES_DIR="${PROJECT_DIR}/templates"
 readonly CONFIG_FILE="${PROJECT_DIR}/deploy-config.json"
-readonly KRAKEN_PROXY_DIR="${PROJECT_DIR}/../../apps/kraken-proxy"
 
 # Generate or validate AppSecret (must be at least 32 characters for encryption)
 get_app_secret() {
@@ -115,74 +117,13 @@ validate_templates() {
 build_lambda() {
   section "Building Lambda Function Code"
 
-  if [[ ! -d "${KRAKEN_PROXY_DIR}" ]]; then
-    error "kraken-proxy directory not found: ${KRAKEN_PROXY_DIR}"
-    exit 1
-  fi
-
-  local build_dir="${PROJECT_DIR}/lambda"
-  local output_zip="${PROJECT_DIR}/lambda.zip"
-
-  info "Building TypeScript code..."
+  info "Running build script..."
   (
-    cd "${KRAKEN_PROXY_DIR}"
+    cd "${PROJECT_DIR}"
     pnpm run build
   )
 
-  info "Preparing Lambda package..."
-  rm -rf "${build_dir}"
-  mkdir -p "${build_dir}"
-
-  # Copy built files
-  cp -r "${KRAKEN_PROXY_DIR}/dist/"* "${build_dir}/"
-
-  # Create empty .env file to prevent ts-kraken from crashing
-  touch "${build_dir}/.env"
-
-  # Copy package.json for dependency installation
-  cp "${KRAKEN_PROXY_DIR}/package.json" "${build_dir}/"
-
-  info "Installing production dependencies..."
-  (
-    cd "${build_dir}"
-
-    # Create package-lock.json to prevent pnpm issues
-    # Clean up package.json for Lambda
-    jq 'del(.devDependencies, .scripts, .pnpm, .workspaces) |
-        .main = "lambda-handler.js" |
-        .type = "module" |
-        .dependencies += {"@vendia/serverless-express": "latest"}' package.json > package.json.tmp
-    mv package.json.tmp package.json
-
-    # Use npm instead of pnpm to avoid workspace issues
-    npm install --production --no-audit --no-fund
-  )
-
-  # Create Lambda handler wrapper
-  cat > "${build_dir}/lambda-handler.js" << 'EOF'
-// Lambda handler wrapper for Express app
-// Set dummy env vars before any imports to prevent ts-kraken from crashing
-if (!process.env.KRAKEN_API_KEY) {
-  process.env.KRAKEN_API_KEY = 'dummy';
-}
-if (!process.env.KRAKEN_API_SECRET) {
-  process.env.KRAKEN_API_SECRET = 'dummy';
-}
-
-import serverlessExpress from '@vendia/serverless-express';
-import { app } from './index.js';
-
-// Don't call app.listen() in Lambda
-export const handler = serverlessExpress({ app });
-EOF
-
-  info "Creating deployment package..."
-  (
-    cd "${build_dir}"
-    zip -r "${output_zip}" . -x "*.git*" "*.DS_Store" "*package-lock.json"
-  )
-
-  success "Lambda package created: ${output_zip}"
+  success "Lambda package created: ${PROJECT_DIR}/lambda.zip"
 }
 
 #

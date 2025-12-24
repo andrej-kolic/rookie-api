@@ -11,6 +11,9 @@ set -euo pipefail
 # shellcheck source=./helpers.sh
 source "$(dirname "$0")/helpers.sh"
 
+# Disable automatic pagination for AWS CLI commands
+export AWS_PAGER=""
+
 # Constants
 readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 readonly PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"

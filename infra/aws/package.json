@@ -12,8 +12,17 @@
     "deploy:outputs": "./scripts/deploy.sh outputs",
     "validate": "./scripts/deploy.sh validate",
     "setup:oidc": "./scripts/oidc.sh",
-    "logs": "aws logs tail \"/aws/lambda/kraken-proxy-api\" --since 1m --format short --region us-east-1"
+    "logs": "aws logs tail \"/aws/lambda/kraken-proxy-api\" --since 1m --format short --region us-east-1",
+    "clean": "rm -rf dist lambda.zip",
+    "bundle": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.mjs --external:aws-sdk --minify --banner:js=\"import { createRequire } from 'module'; const require = createRequire(import.meta.url);\"",
+    "package": "cd dist && touch .env && zip -r ../lambda.zip index.mjs .env",
+    "build": "pnpm run clean && pnpm run bundle && pnpm run package"
   },
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "@vendia/serverless-express": "^4.12.6",
+    "kraken-proxy": "workspace:*"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.2"
+  }
 }

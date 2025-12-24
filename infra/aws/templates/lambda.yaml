@@ -57,7 +57,7 @@ Resources:
       FunctionName: !Sub '${ProjectName}-api'
       Description: 'Kraken Proxy API - Express.js REST API'
       Runtime: !Ref NodeRuntime
-      Handler: lambda-handler.handler
+      Handler: index.handler
       Role: !GetAtt LambdaExecutionRole.Arn
       MemorySize: !Ref LambdaMemory
       Timeout: !Ref LambdaTimeout
