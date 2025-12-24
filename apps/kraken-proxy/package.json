@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "_dev": "nodemon -w src --exec tsx src/index.ts",
-    "dev": "tsx --watch src/index.ts",
+    "_dev": "nodemon -w src --exec tsx src/run-local.ts",
+    "dev": "tsx --watch src/run-local.ts",
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/run-local.js",
     "lint": "eslint .",
     "check:type": "tsc --noEmit"
   },
