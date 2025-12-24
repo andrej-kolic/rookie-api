@@ -1,7 +1,6 @@
 import js from '@eslint/js';
 import { globalIgnores } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import turboPlugin from 'eslint-plugin-turbo';
 import tseslint from 'typescript-eslint';
 // import onlyWarn from 'eslint-plugin-only-warn';
 import globals from 'globals';
@@ -65,7 +64,7 @@ export const config = tseslint.config(
       ],
 
       // '@typescript-eslint/explicit-function-return-type': 'error',
-      'no-console': 'warn', // Example of an ESLint core rule
+      "no-console": ["warn", { "allow": ["error", "clear"] }],
       semi: ['error', 'always'],
       // '@typescript-eslint/no-explicit-any': 'off', // Example: turning off a rule
 
@@ -90,28 +89,6 @@ export const config = tseslint.config(
           allowNumber: true,
         },
       ],
-    },
-  },
-
-  /** onlyWarn - use in combination with maxWarnings=0 */
-
-  // {
-  //   plugins: {
-  //     onlyWarn,
-  //   },
-  // },
-  // {
-  //   ignores: ['dist/**'],
-  // },
-
-  /** Turbo: report undeclared variables (important for caching) */
-
-  {
-    plugins: {
-      turbo: turboPlugin,
-    },
-    rules: {
-      'turbo/no-undeclared-env-vars': 'warn',
     },
   },
 
