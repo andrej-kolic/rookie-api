@@ -1,5 +1,5 @@
 {
-  "name": "kraken-proxy",
+  "name": "@repo/kraken-proxy",
   "private": true,
   "version": "0.0.0",
   "type": "module",

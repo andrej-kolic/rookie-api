@@ -5,7 +5,7 @@
 			"path": "."
 		},
 		{
-			"name": "🚀 kraken-proxy",
+			"name": "🚀 @repo/kraken-proxy",
 			"path": "apps/kraken-proxy"
 		},
 		{

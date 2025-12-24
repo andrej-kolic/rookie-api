@@ -72,12 +72,12 @@ importers:
 
   infra/aws:
     dependencies:
+      '@repo/kraken-proxy':
+        specifier: workspace:*
+        version: link:../../apps/kraken-proxy
       '@vendia/serverless-express':
         specifier: ^4.12.6
         version: 4.12.6
-      kraken-proxy:
-        specifier: workspace:*
-        version: link:../../apps/kraken-proxy
     devDependencies:
       esbuild:
         specifier: ^0.27.2

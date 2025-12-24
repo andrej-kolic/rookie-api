@@ -2,7 +2,7 @@
   "name": "@repo/infra-aws",
   "version": "1.0.0",
   "private": true,
-  "description": "AWS infrastructure for kraken-proxy API deployment",
+  "description": "AWS infrastructure for @repo/kraken-proxy API deployment",
   "type": "module",
   "scripts": {
     "envprint": "printenv",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@vendia/serverless-express": "^4.12.6",
-    "kraken-proxy": "workspace:*"
+    "@repo/kraken-proxy": "workspace:*"
   },
   "devDependencies": {
     "esbuild": "^0.27.2"

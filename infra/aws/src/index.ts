@@ -11,7 +11,7 @@ if (!process.env.KRAKEN_API_SECRET) {
 
 // Import the Express app from the workspace package
 // esbuild will bundle the TypeScript source directly
-import { app } from 'kraken-proxy';
+import { app } from '@repo/kraken-proxy';
 
 // Export the handler for AWS Lambda
 export const handler = serverlessExpress({ app });
