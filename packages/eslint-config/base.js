@@ -72,7 +72,7 @@ export const config = tseslint.config(
        * See
        * https://www.totaltypescript.com/type-vs-interface-which-should-you-use
        */
-      '@typescript-eslint/consistent-type-definitions': ['warn', 'type'],
+      '@typescript-eslint/consistent-type-definitions': ['warn', 'interface'],
 
       /**
        * Temporary disable due to bug in @typescript-eslint/unified-signatures v8.46.2

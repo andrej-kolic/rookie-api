@@ -1,6 +1,7 @@
 // TODO: move to separate file
 import dotenv from 'dotenv';
-import { app, config } from './index.js';
+import { app } from './app';
+import { config } from './config';
 
 // TODO: move to separate file
 // In Lambda, don't try to load .env file
