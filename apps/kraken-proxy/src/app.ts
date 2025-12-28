@@ -39,10 +39,18 @@ app.get('/ws-token', protectedAuth, krakenController.getWsToken);
 app.get('/balance', protectedAuth, krakenController.getBalance);
 
 // Error Handler Middleware
-app.use((err: unknown, req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  console.error(err);
-  const message = err instanceof Error ? err.message : 'Internal Server Error';
-  res.status(500).json({ error: message });
-});
+app.use(
+  (
+    err: unknown,
+    req: express.Request,
+    res: express.Response,
+    _next: express.NextFunction,
+  ) => {
+    console.error(err);
+    const message =
+      err instanceof Error ? err.message : 'Internal Server Error';
+    res.status(500).json({ error: message });
+  },
+);
 
 export { app };

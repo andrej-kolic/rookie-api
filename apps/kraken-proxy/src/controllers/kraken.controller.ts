@@ -1,11 +1,9 @@
 import type { Request, Response, NextFunction } from 'express';
 import { KrakenService } from '../services/kraken.service';
 import type { AuthRequest } from '../middleware/auth.middleware';
+import { AppError } from '../utils/app-error';
 
 export class KrakenController {
-  /**
-   * Dependency Injection: KrakenService is injected via the constructor.
-   */
   constructor(private krakenService: KrakenService) {}
 
   public getHello = (req: Request, res: Response) => {
@@ -19,17 +17,11 @@ export class KrakenController {
   ) => {
     try {
       if (!req.credentials) {
-        res
-          .status(401)
-          .json({
-            error:
-              'Authentication credentials are required but were not provided.',
-          });
-        return;
+        throw new AppError('Authentication credentials required.', 401);
       }
 
       const token = await this.krakenService.getWsToken(req.credentials);
-      res.json({ result: { token } });
+      res.status(200).json({ result: { token } });
     } catch (error) {
       next(error);
     }
@@ -42,17 +34,11 @@ export class KrakenController {
   ) => {
     try {
       if (!req.credentials) {
-        res
-          .status(401)
-          .json({
-            error:
-              'Authentication credentials are required but were not provided.',
-          });
-        return;
+        throw new AppError('Authentication credentials required.', 401);
       }
 
       const balance = await this.krakenService.getBalance(req.credentials);
-      res.json(balance);
+      res.status(200).json(balance);
     } catch (error) {
       next(error);
     }
