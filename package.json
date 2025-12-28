@@ -10,8 +10,12 @@
   "license": "ISC",
   "scripts": {
     "check:dependencies": "dotenv -- syncpack lint",
-    "check:format": "dotenv -- prettier . --check",
     "clear:cache": "pnpm cache delete && rm -rf pnpm-lock.yaml && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "lint": "dotenv -- pnpm --parallel --filter '*' lint",
+    "dev": "dotenv -- pnpm --parallel --filter '*' dev",
+    "preview": "dotenv -- pnpm --parallel --filter '*' preview",
+    "check:format": "dotenv -- prettier . --check",
+    "check:type": "dotenv -- pnpm --parallel --filter '*' check:type",
     "format:code": "dotenv -- prettier . --write",
     "format:dependencies": "dotenv -- pnpm dlx sherif@latest -f",
     "prepare": "husky"

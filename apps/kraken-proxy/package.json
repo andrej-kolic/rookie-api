@@ -12,7 +12,7 @@
     "_dev": "nodemon -w src --exec tsx src/run-local.ts",
     "dev": "tsx --watch src/run-local.ts",
     "build": "tsc",
-    "start": "node dist/run-local.js",
+    "preview": "node dist/run-local.js",
     "lint": "eslint .",
     "check:type": "tsc --noEmit"
   },
