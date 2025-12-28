@@ -35,7 +35,7 @@ describe('KrakenController', () => {
     await krakenController.getWsToken(
       mockRequest as AuthRequest,
       mockResponse as Response,
-      nextFunction
+      nextFunction,
     );
 
     // Assert: Check if next was called with the specific AppError
@@ -55,12 +55,16 @@ describe('KrakenController', () => {
     await krakenController.getWsToken(
       mockRequest as AuthRequest,
       mockResponse as Response,
-      nextFunction
+      nextFunction,
     );
 
     // Assert
-    expect(mockKrakenService.getWsToken).toHaveBeenCalledWith(mockRequest.credentials);
+    expect(mockKrakenService.getWsToken).toHaveBeenCalledWith(
+      mockRequest.credentials,
+    );
     expect(mockResponse.status).toHaveBeenCalledWith(200);
-    expect(mockResponse.json).toHaveBeenCalledWith({ result: { token: 'fake-ws-token' } });
+    expect(mockResponse.json).toHaveBeenCalledWith({
+      result: { token: 'fake-ws-token' },
+    });
   });
 });

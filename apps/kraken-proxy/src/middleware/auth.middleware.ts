@@ -16,7 +16,7 @@ export const authMiddleware = (authService: AuthService) => {
 
     try {
       const token = authHeader.split(' ')[1];
-      if(!token) {
+      if (!token) {
         throw new Error('No token found');
       }
 

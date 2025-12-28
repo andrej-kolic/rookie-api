@@ -64,7 +64,7 @@ export const config = tseslint.config(
       ],
 
       // '@typescript-eslint/explicit-function-return-type': 'error',
-        'no-console': 'off',
+      'no-console': 'off',
       semi: ['error', 'always'],
       // '@typescript-eslint/no-explicit-any': 'off', // Example: turning off a rule
 

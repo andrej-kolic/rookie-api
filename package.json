@@ -14,10 +14,12 @@
     "lint": "dotenv -- pnpm --parallel --filter '*' lint",
     "dev": "dotenv -- pnpm --parallel --filter '*' dev",
     "preview": "dotenv -- pnpm --parallel --filter '*' preview",
+    "test": "dotenv -- pnpm --parallel --filter '*' test",
     "check:format": "dotenv -- prettier . --check",
     "check:type": "dotenv -- pnpm --parallel --filter '*' check:type",
     "format:code": "dotenv -- prettier . --write",
     "format:dependencies": "dotenv -- pnpm dlx sherif@latest -f",
+    "quality-checks": "dotenv -- pnpm check:format && pnpm check:type && pnpm lint && pnpm test",
     "prepare": "husky"
   },
   "devDependencies": {

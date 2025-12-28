@@ -9,7 +9,7 @@ export interface EncryptedData {
   iv: string;
   data: string;
   authTag: string;
-};
+}
 
 export const encrypt = (text: string): EncryptedData => {
   const iv = crypto.randomBytes(IV_LENGTH);
