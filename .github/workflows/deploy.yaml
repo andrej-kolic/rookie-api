@@ -35,9 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       APP_SECRET: ${{ secrets.APP_SECRET }}
-    # defaults:
-    #   run:
-    #     working-directory: infra/aws
 
     steps:
       - name: Checkout code
@@ -55,7 +52,6 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        # working-directory: apps/kraken-proxy
         run: pnpm install --frozen-lockfile
 
       - name: Configure AWS credentials
@@ -68,4 +64,3 @@ jobs:
         uses: ./infra/aws/.github/actions/deploy
         with:
           action: ${{ github.event.inputs.action || 'update' }}
-          # working-directory: infra/aws
