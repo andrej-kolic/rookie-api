@@ -1,5 +1,5 @@
 {
-  "project_name": "kraken-proxy",
+  "project_name": "rookie-api",
   "region": "us-east-1",
   "oidc": {
     "provider_arn": "arn:aws:iam::629994690329:oidc-provider/token.actions.githubusercontent.com",
@@ -8,7 +8,7 @@
   },
   "parameters": {
     "DomainName": "andrejkolic.com",
-    "SubDomain": "kraken-proxy",
+    "SubDomain": "rookie-api",
     "HostedZoneId": "Z00295123IDZ7CVMX671W",
     "NodeRuntime": "nodejs22.x",
     "LambdaMemory": "512",

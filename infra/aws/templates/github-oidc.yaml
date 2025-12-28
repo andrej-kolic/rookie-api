@@ -5,7 +5,6 @@ Parameters:
   ProjectName:
     Type: String
     Description: Project name used for resource naming
-    Default: 'kraken-proxy'
 
   GitHubOrg:
     Type: String
