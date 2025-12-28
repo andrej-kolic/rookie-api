@@ -19,10 +19,10 @@
     "build": "pnpm run clean && pnpm run bundle && pnpm run package"
   },
   "dependencies": {
-    "@vendia/serverless-express": "^4.12.6",
+    "@vendia/serverless-express": "4.12.6",
     "@repo/kraken-proxy": "workspace:*"
   },
   "devDependencies": {
-    "esbuild": "^0.27.2"
+    "esbuild": "0.27.2"
   }
 }
