@@ -1,0 +1,152 @@
+name: 'Build Project'
+description: 'Setup Node.js environment, install dependencies, and run build pipeline'
+
+inputs:
+  node-version:
+    description: 'Node.js version to use'
+    required: false
+    default: '24'
+
+  check-dependencies:
+    description: 'Run dependency check (pnpm check:dependencies)'
+    required: false
+    default: 'true'
+
+  check-format:
+    description: 'Run format check (pnpm check:format)'
+    required: false
+    default: 'true'
+
+  run-lint:
+    description: 'Run linting (pnpm lint)'
+    required: false
+    default: 'true'
+
+  run-tests:
+    description: 'Run tests (pnpm test)'
+    required: false
+    default: 'true'
+
+runs:
+  using: 'composite'
+
+  steps:
+    # Log input
+
+    - shell: bash
+      run: |
+        echo " "
+        echo " "
+        echo "Log input"
+        echo "──────────────────────────────────────"
+        echo " "
+    - name: Log input
+      shell: bash
+      run: |
+        echo " "
+        echo "Node.js version: ${{ inputs.node-version }}"
+        echo "Check dependencies: ${{ inputs.check-dependencies }}"
+        echo "Check format: ${{ inputs.check-format }}"
+        echo "Run lint: ${{ inputs.run-lint }}"
+        echo "Run tests: ${{ inputs.run-tests }}"
+        echo " "
+
+    # Setup pnpm
+
+    - shell: bash
+      run: |
+        echo " "
+        echo " "
+        echo "Setup pnpm"
+        echo "──────────────────────────────────────"
+        echo " "
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+
+    # Setup Setup Node.js
+
+    - shell: bash
+      run: |
+        echo " "
+        echo " "
+        echo "Setup Node.js"
+        echo "──────────────────────────────────────"
+        echo " "
+    - name: Setup Node.js
+      uses: actions/setup-node@v5
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: 'pnpm'
+
+    # Install dependencies
+
+    - shell: bash
+      run: |
+        echo " "
+        echo " "
+        echo "Install dependencies"
+        echo "──────────────────────────────────────"
+        echo " "
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install
+
+    # Check dependencies
+
+    - if: inputs.check-dependencies == 'true'
+      shell: bash
+      run: |
+        echo " "
+        echo " "
+        echo "Check dependencies"
+        echo "──────────────────────────────────────"
+        echo " "
+    - name: Check dependencies
+      if: inputs.check-dependencies == 'true'
+      shell: bash
+      run: pnpm check:dependencies
+
+    # Check format
+
+    - if: inputs.check-format == 'true'
+      shell: bash
+      run: |
+        echo " "
+        echo " "
+        echo "Check format"
+        echo "──────────────────────────────────────"
+        echo " "
+    - name: Check format
+      if: inputs.check-format == 'true'
+      shell: bash
+      run: pnpm check:format
+
+    # lint
+
+    - if: inputs.run-lint == 'true'
+      shell: bash
+      run: |
+        echo " "
+        echo " "
+        echo "Lint"
+        echo "──────────────────────────────────────"
+        echo " "
+    - name: Lint
+      if: inputs.run-lint == 'true'
+      shell: bash
+      run: pnpm lint
+
+    # Test
+
+    - if: inputs.run-tests == 'true'
+      shell: bash
+      run: |
+        echo " "
+        echo " "
+        echo "Test"
+        echo "──────────────────────────────────────"
+        echo " "
+    - name: Test
+      if: inputs.run-tests == 'true'
+      shell: bash
+      run: pnpm test

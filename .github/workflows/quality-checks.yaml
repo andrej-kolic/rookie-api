@@ -1,0 +1,44 @@
+name: 'Quality checks'
+
+on:
+  workflow_dispatch:
+    inputs:
+      check_dependencies:
+        type: boolean
+        description: Check dependencies
+        default: true
+      check_format:
+        type: boolean
+        description: Check format
+        default: true
+      run_lint:
+        type: boolean
+        description: Run lint
+        default: true
+      run_tests:
+        type: boolean
+        description: Run tests
+        default: true
+
+env:
+  HUSKY: 0
+
+jobs:
+  build:
+    name: Quality checks
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+
+      - name: Quality checks
+        uses: ./.github/actions/quality-checks
+        with:
+          check-dependencies: ${{ github.event.inputs.check_dependencies }}
+          check-format: ${{ github.event.inputs.check_format }}
+          run-lint: ${{ github.event.inputs.run_lint }}
+          run-tests: ${{ github.event.inputs.run_tests }}
