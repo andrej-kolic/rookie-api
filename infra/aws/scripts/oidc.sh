@@ -182,7 +182,7 @@ EOF
 # Main execution
 #
 main() {
-  header "GitHub OIDC Setup for Kraken Proxy"
+  header "GitHub OIDC Setup for rookie-api"
 
   load_config
   check_oidc_provider
