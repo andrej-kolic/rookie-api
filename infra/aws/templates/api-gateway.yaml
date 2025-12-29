@@ -38,8 +38,15 @@ Resources:
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs'
 
+  # Configure API Gateway Account with CloudWatch Logs Role
+  ApiGatewayAccount:
+    Type: AWS::ApiGateway::Account
+    Properties:
+      CloudWatchRoleArn: !GetAtt ApiGatewayLoggingRole.Arn
+
   # API Gateway HTTP API
   HttpApi:
+    DependsOn: ApiGatewayAccount
     Type: AWS::ApiGatewayV2::Api
     Properties:
       Name: !Sub '${ProjectName}-api'
