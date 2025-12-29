@@ -10,4 +10,9 @@ export default {
   moduleNameMapper: {
     '^dotenv$': '<rootDir>/test/mocks/dotenv.cjs', // Mock dotenv globally
   },
+
+  // testMatch: [
+  //   '**/__tests__/**/*.ts', // Finds your unit tests
+  //   '**/tests/**/*.test.ts', // Finds your integration tests
+  // ],
 };
