@@ -23,6 +23,21 @@ Parameters:
     Description: Lambda Function ARN
 
 Resources:
+  # IAM Role for API Gateway to write logs
+  ApiGatewayLoggingRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${ProjectName}-api-gateway-logging-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: apigateway.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs'
+
   # API Gateway HTTP API
   HttpApi:
     Type: AWS::ApiGatewayV2::Api
