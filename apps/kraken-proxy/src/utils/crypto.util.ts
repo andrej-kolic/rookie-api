@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { config } from '../config.js';
+import { config } from '../config';
 
 const ALGORITHM = 'aes-256-gcm';
 const SECRET_KEY = Buffer.from(config.appSecret.padEnd(32).slice(0, 32));
