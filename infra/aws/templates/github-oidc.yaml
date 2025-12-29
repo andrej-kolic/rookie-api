@@ -124,6 +124,8 @@ Resources:
               - 'lambda:RemovePermission'
               - 'lambda:GetPolicy'
               - 'lambda:TagResource'
+              - 'lambda:PutFunctionConcurrency'
+              - 'lambda:DeleteFunctionConcurrency'
             Resource:
               - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${ProjectName}*'
 

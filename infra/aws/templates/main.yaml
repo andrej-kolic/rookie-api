@@ -154,10 +154,6 @@ Outputs:
     Export:
       Name: !Sub '${AWS::StackName}-LambdaFunctionName'
 
-  FunctionUrl:
-    Description: Lambda Function URL (direct access)
-    Value: !GetAtt LambdaStack.Outputs.FunctionUrl
-
   ApiGatewayId:
     Description: API Gateway HTTP API ID
     Value: !GetAtt ApiGatewayStack.Outputs.ApiId
