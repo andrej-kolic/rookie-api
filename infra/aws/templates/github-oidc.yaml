@@ -170,6 +170,7 @@ Resources:
               - !Sub 'arn:aws:apigateway:${AWS::Region}:${AWS::AccountId}:/apis/*'
               - !Sub 'arn:aws:apigateway:${AWS::Region}:${AWS::AccountId}:/domainnames/*'
               - !Sub 'arn:aws:apigateway:${AWS::Region}::/domainnames'
+              - !Sub 'arn:aws:apigateway:${AWS::Region}::/tags/*'
 
           # CloudFront permissions
           - Sid: CloudFrontManagement
