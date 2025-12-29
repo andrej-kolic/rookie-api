@@ -37,13 +37,13 @@ jobs:
           chmod +x scripts/oidc.sh
           ./scripts/oidc.sh
 
-      - name: Display Role ARN
-        run: |
-          ROLE_ARN=$(aws cloudformation describe-stacks \
-            --stack-name kraken-proxy-github-oidc \
-            --region us-east-1 \
-            --query 'Stacks[0].Outputs[?OutputKey==`RoleArn`].OutputValue' \
-            --output text)
+      # - name: Display Role ARN
+      #   run: |
+      #     ROLE_ARN=$(aws cloudformation describe-stacks \
+      #       --stack-name kraken-proxy-github-oidc \
+      #       --region us-east-1 \
+      #       --query 'Stacks[0].Outputs[?OutputKey==`RoleArn`].OutputValue' \
+      #       --output text)
 
-          echo "::notice title=OIDC Setup Complete::Add this Role ARN as GitHub secret 'AWS_ROLE_ARN': ${ROLE_ARN}"
-          echo "ROLE_ARN=${ROLE_ARN}" >> $GITHUB_OUTPUT
+      #     echo "::notice title=OIDC Setup Complete::Add this Role ARN as GitHub secret 'AWS_ROLE_ARN': ${ROLE_ARN}"
+      #     echo "ROLE_ARN=${ROLE_ARN}" >> $GITHUB_OUTPUT

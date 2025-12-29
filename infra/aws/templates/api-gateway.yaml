@@ -23,6 +23,36 @@ Parameters:
     Description: Lambda Function ARN
 
 Resources:
+  # CloudWatch Log Group for API Gateway
+  ApiLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/apigateway/${ProjectName}'
+      RetentionInDays: 7
+
+  # Resource Policy for CloudWatch Logs (allow API Gateway to write)
+  ApiLogGroupResourcePolicy:
+    Type: AWS::Logs::ResourcePolicy
+    Properties:
+      PolicyName: !Sub '${ProjectName}-apigateway-logs-policy'
+      PolicyDocument: !Sub |
+        {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com"
+              },
+              "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Resource": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/apigateway/${ProjectName}:*"
+            }
+          ]
+        }
+
   # API Gateway HTTP API
   HttpApi:
     Type: AWS::ApiGatewayV2::Api
@@ -75,13 +105,6 @@ Resources:
       AccessLogSettings:
         DestinationArn: !GetAtt ApiLogGroup.Arn
         Format: '$context.requestId $context.error.message $context.error.messageString'
-
-  # CloudWatch Log Group for API Gateway
-  ApiLogGroup:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Sub '/aws/apigateway/${ProjectName}'
-      RetentionInDays: 7
 
   # Custom Domain
   CustomDomain:
