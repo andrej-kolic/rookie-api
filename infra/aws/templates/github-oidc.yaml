@@ -127,7 +127,7 @@ Resources:
             Resource:
               - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${ProjectName}*'
 
-          # IAM Role permissions (for Lambda execution role)
+          # IAM Role permissions (for Lambda execution role and API Gateway logging role)
           - Sid: IAMRoleManagement
             Effect: Allow
             Action:
@@ -141,8 +141,10 @@ Resources:
               - 'iam:DeleteRolePolicy'
               - 'iam:GetRolePolicy'
               - 'iam:TagRole'
+              - 'iam:CreateServiceLinkedRole'
             Resource:
               - !Sub 'arn:aws:iam::${AWS::AccountId}:role/${ProjectName}*'
+              - !Sub 'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/ops.apigateway.amazonaws.com/*'
 
           # CloudWatch Logs
           - Sid: CloudWatchLogs
@@ -150,12 +152,27 @@ Resources:
             Action:
               - 'logs:CreateLogGroup'
               - 'logs:DeleteLogGroup'
-              - 'logs:DescribeLogGroups'
               - 'logs:PutRetentionPolicy'
               - 'logs:TagLogGroup'
             Resource:
               - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${ProjectName}*'
               - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/apigateway/${ProjectName}*'
+
+          # CloudWatch Logs - Service-level actions (require * resource)
+          - Sid: CloudWatchLogsServiceLevel
+            Effect: Allow
+            Action:
+              - 'logs:DescribeLogGroups'
+              - 'logs:CreateLogDelivery'
+              - 'logs:DeleteLogDelivery'
+              - 'logs:DescribeLogDeliveries'
+              - 'logs:GetLogDelivery'
+              - 'logs:ListLogDeliveries'
+              - 'logs:UpdateLogDelivery'
+              - 'logs:PutResourcePolicy'
+              - 'logs:DescribeResourcePolicies'
+              - 'logs:DeleteResourcePolicy'
+            Resource: '*'
 
           # API Gateway permissions
           - Sid: ApiGatewayManagement
@@ -166,11 +183,15 @@ Resources:
               - 'apigateway:PUT'
               - 'apigateway:DELETE'
               - 'apigateway:PATCH'
+              - 'apigateway:TagResource'
+              - 'apigateway:UpdateAccount'
             Resource:
-              - !Sub 'arn:aws:apigateway:${AWS::Region}:${AWS::AccountId}:/apis/*'
-              - !Sub 'arn:aws:apigateway:${AWS::Region}:${AWS::AccountId}:/domainnames/*'
+              - !Sub 'arn:aws:apigateway:${AWS::Region}::/apis'
+              - !Sub 'arn:aws:apigateway:${AWS::Region}::/apis/*'
               - !Sub 'arn:aws:apigateway:${AWS::Region}::/domainnames'
+              - !Sub 'arn:aws:apigateway:${AWS::Region}::/domainnames/*'
               - !Sub 'arn:aws:apigateway:${AWS::Region}::/tags/*'
+              - !Sub 'arn:aws:apigateway:${AWS::Region}::/account'
 
           # CloudFront permissions
           - Sid: CloudFrontManagement
