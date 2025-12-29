@@ -123,6 +123,7 @@ Resources:
               - 'lambda:AddPermission'
               - 'lambda:RemovePermission'
               - 'lambda:GetPolicy'
+              - 'lambda:TagResource'
             Resource:
               - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${ProjectName}*'
 
