@@ -1,4 +1,4 @@
-name: Deploy Kraken Proxy
+name: Deploy Rookie API
 
 on:
   workflow_dispatch:

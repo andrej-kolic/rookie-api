@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Kraken Proxy API - Main Stack (Lambda + API Gateway + Route53)'
+Description: 'Rookie API - Main Stack (Lambda + API Gateway + Route53)'
 
 Parameters:
   ProjectName:

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Deployment script for Kraken Proxy AWS Infrastructure
+# Deployment script for Rookie API AWS Infrastructure
 #
 # Usage: ./deploy.sh <action>
 #
@@ -255,7 +255,7 @@ get_outputs() {
 #
 show_help() {
   cat << EOF
-Kraken Proxy AWS Deployment Script
+Rookie API AWS Deployment Script
 
 Usage: $0 <action>
 

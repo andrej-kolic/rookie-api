@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'API Gateway HTTP API with Custom Domain for Kraken Proxy'
+Description: 'API Gateway HTTP API with Custom Domain for Rookie API'
 
 Parameters:
   ProjectName:
@@ -58,7 +58,7 @@ Resources:
     Type: AWS::ApiGatewayV2::Api
     Properties:
       Name: !Sub '${ProjectName}-api'
-      Description: Kraken Proxy HTTP API
+      Description: Rookie API Gateway HTTP API
       ProtocolType: HTTP
       CorsConfiguration:
         AllowOrigins:

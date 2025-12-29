@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This is a **cost-optimized AWS infrastructure package** for deploying the **Kraken Proxy API** (Express.js/Node.js) using serverless Lambda, CloudFront, and Route53. The architecture is designed for a pet project with minimal monthly costs (~$1-2) while maintaining professional infrastructure-as-code practices.
+This is a **cost-optimized AWS infrastructure package** for deploying the **Rookie API** (Express.js/Node.js) using serverless Lambda, CloudFront, and Route53. The architecture is designed for a pet project with minimal monthly costs (~$1-2) while maintaining professional infrastructure-as-code practices.
 
 ## Architecture & Components
 
@@ -197,7 +197,7 @@ Modify policies in `templates/cloudfront.yaml`:
 
 ## Application-Specific Details
 
-### Kraken Proxy API
+### Rookie API API
 
 - **Express.js REST API** proxying Kraken cryptocurrency exchange
 - **No backend secrets**: Frontend provides Kraken API keys via request headers

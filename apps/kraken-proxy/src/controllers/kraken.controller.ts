@@ -7,7 +7,7 @@ export class KrakenController {
   constructor(private krakenService: KrakenService) {}
 
   public getHello = (req: Request, res: Response) => {
-    res.send('Kraken Proxy is running');
+    res.send('Rookie API is running');
   };
 
   public getWsToken = async (

@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Lambda Function with Function URL for Kraken Proxy API'
+Description: 'Lambda Function with Function URL for Rookie API'
 
 Parameters:
   ProjectName:
@@ -56,7 +56,7 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: !Sub '${ProjectName}-api'
-      Description: 'Kraken Proxy API - Express.js REST API'
+      Description: 'Rookie API - Express.js REST API'
       Runtime: !Ref NodeRuntime
       Handler: index.handler
       Role: !GetAtt LambdaExecutionRole.Arn
