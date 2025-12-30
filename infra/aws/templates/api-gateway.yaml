@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'API Gateway HTTP API with Custom Domain for Kraken Proxy'
+Description: 'API Gateway HTTP API with Custom Domain for Rookie API'
 
 Parameters:
   ProjectName:
@@ -58,7 +58,7 @@ Resources:
     Type: AWS::ApiGatewayV2::Api
     Properties:
       Name: !Sub '${ProjectName}-api'
-      Description: Kraken Proxy HTTP API
+      Description: Rookie API Gateway HTTP API
       ProtocolType: HTTP
       CorsConfiguration:
         AllowOrigins:
@@ -104,7 +104,10 @@ Resources:
       AutoDeploy: true
       AccessLogSettings:
         DestinationArn: !GetAtt ApiLogGroup.Arn
-        Format: '$context.requestId $context.error.message $context.error.messageString'
+        Format: '{"requestId":"$context.requestId","ip":"$context.identity.sourceIp","requestTime":"$context.requestTime","httpMethod":"$context.httpMethod","routeKey":"$context.routeKey","status":"$context.status","protocol":"$context.protocol","responseLength":"$context.responseLength","integrationLatency":"$context.integrationLatency"}'
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 100
+        ThrottlingRateLimit: 50
 
   # Custom Domain
   CustomDomain:

@@ -1,6 +1,6 @@
-# Kraken Proxy AWS Infrastructure
+# Rookie API AWS Infrastructure
 
-Cost-optimized AWS infrastructure for deploying the Kraken Proxy API using Lambda, CloudFront, and Route53.
+Cost-optimized AWS infrastructure for deploying the Rookie API API using Lambda, CloudFront, and Route53.
 
 ## 🏗️ Architecture
 
@@ -151,7 +151,7 @@ make outputs
 **Manual deployment**:
 
 1. Go to **Actions** tab
-2. Select **"Deploy Kraken Proxy"** workflow
+2. Select **"Deploy Rookie API"** workflow
 3. Click **"Run workflow"**
 4. Choose action:
    - `infra` - Deploy/update CloudFormation stack

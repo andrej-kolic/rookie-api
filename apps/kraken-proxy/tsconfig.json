@@ -2,11 +2,11 @@
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": ".",
     "module": "esnext",
     "moduleResolution": "bundler",
     "target": "ES2022",
     "types": ["jest", "node"]
   },
-  "include": ["src"]
+  "include": ["src", "test"]
 }

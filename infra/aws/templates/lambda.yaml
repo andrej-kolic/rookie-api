@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Lambda Function with Function URL for Kraken Proxy API'
+Description: 'Lambda Function with Function URL for Rookie API'
 
 Parameters:
   ProjectName:
@@ -39,6 +39,7 @@ Resources:
             Action: 'sts:AssumeRole'
       ManagedPolicyArns:
         - 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
+        - 'arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess'
       Tags:
         - Key: Project
           Value: !Ref ProjectName
@@ -55,12 +56,13 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: !Sub '${ProjectName}-api'
-      Description: 'Kraken Proxy API - Express.js REST API'
+      Description: 'Rookie API - Express.js REST API'
       Runtime: !Ref NodeRuntime
       Handler: index.handler
       Role: !GetAtt LambdaExecutionRole.Arn
       MemorySize: !Ref LambdaMemory
       Timeout: !Ref LambdaTimeout
+      ReservedConcurrentExecutions: 10
       Code:
         ZipFile: |
           exports.handler = async (event) => {
@@ -81,41 +83,11 @@ Resources:
           NODE_ENV: production
           LOG_LEVEL: info
           APP_SECRET: !Ref AppSecret
+      TracingConfig:
+        Mode: Active
       Tags:
         - Key: Project
           Value: !Ref ProjectName
-
-  # Lambda Function URL
-  FunctionUrl:
-    Type: AWS::Lambda::Url
-    Properties:
-      TargetFunctionArn: !GetAtt ApiFunction.Arn
-      AuthType: NONE
-      Cors:
-        AllowOrigins:
-          - '*'
-        AllowMethods:
-          - GET
-          - POST
-          - PUT
-          - DELETE
-          - PATCH
-          - HEAD
-        AllowHeaders:
-          - '*'
-        ExposeHeaders:
-          - '*'
-        MaxAge: 86400
-        AllowCredentials: false
-
-  # Permission for Function URL - required for AuthType NONE
-  FunctionUrlPermission:
-    Type: AWS::Lambda::Permission
-    Properties:
-      FunctionName: !Ref ApiFunction
-      Action: lambda:InvokeFunctionUrl
-      Principal: '*'
-      FunctionUrlAuthType: NONE
 
 Outputs:
   FunctionArn:
@@ -125,10 +97,6 @@ Outputs:
   FunctionName:
     Description: Lambda Function Name
     Value: !Ref ApiFunction
-
-  FunctionUrl:
-    Description: Lambda Function URL
-    Value: !GetAtt FunctionUrl.FunctionUrl
 
   LogGroupName:
     Description: CloudWatch Log Group Name

@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'GitHub OIDC Provider and IAM Role for Kraken Proxy Deployments'
+Description: 'GitHub OIDC Provider and IAM Role for Rookie API Deployments'
 
 Parameters:
   ProjectName:
@@ -66,7 +66,7 @@ Resources:
     Type: AWS::IAM::ManagedPolicy
     Properties:
       ManagedPolicyName: !Sub '${ProjectName}-deployment-policy'
-      Description: Permissions for deploying Kraken Proxy infrastructure
+      Description: Permissions for deploying Rookie API infrastructure
       PolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -116,18 +116,16 @@ Resources:
               - 'lambda:GetFunctionConfiguration'
               - 'lambda:ListFunctions'
               - 'lambda:PublishVersion'
-              - 'lambda:CreateFunctionUrlConfig'
-              - 'lambda:UpdateFunctionUrlConfig'
-              - 'lambda:DeleteFunctionUrlConfig'
-              - 'lambda:GetFunctionUrlConfig'
               - 'lambda:AddPermission'
               - 'lambda:RemovePermission'
               - 'lambda:GetPolicy'
               - 'lambda:TagResource'
+              - 'lambda:PutFunctionConcurrency'
+              - 'lambda:DeleteFunctionConcurrency'
             Resource:
               - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${ProjectName}*'
 
-          # IAM Role permissions (for Lambda execution role and API Gateway logging role)
+          # IAM Role permissions (for Lambda execution role)
           - Sid: IAMRoleManagement
             Effect: Allow
             Action:
@@ -141,10 +139,19 @@ Resources:
               - 'iam:DeleteRolePolicy'
               - 'iam:GetRolePolicy'
               - 'iam:TagRole'
-              - 'iam:CreateServiceLinkedRole'
             Resource:
               - !Sub 'arn:aws:iam::${AWS::AccountId}:role/${ProjectName}*'
+
+          # IAM Service-linked role (for API Gateway)
+          - Sid: IAMServiceLinkedRole
+            Effect: Allow
+            Action:
+              - 'iam:CreateServiceLinkedRole'
+            Resource:
               - !Sub 'arn:aws:iam::${AWS::AccountId}:role/aws-service-role/ops.apigateway.amazonaws.com/*'
+            Condition:
+              StringEquals:
+                'iam:AWSServiceName': 'ops.apigateway.amazonaws.com'
 
           # CloudWatch Logs
           - Sid: CloudWatchLogs
@@ -192,32 +199,6 @@ Resources:
               - !Sub 'arn:aws:apigateway:${AWS::Region}::/domainnames/*'
               - !Sub 'arn:aws:apigateway:${AWS::Region}::/tags/*'
               - !Sub 'arn:aws:apigateway:${AWS::Region}::/account'
-
-          # CloudFront permissions
-          - Sid: CloudFrontManagement
-            Effect: Allow
-            Action:
-              - 'cloudfront:CreateDistribution'
-              - 'cloudfront:UpdateDistribution'
-              - 'cloudfront:DeleteDistribution'
-              - 'cloudfront:GetDistribution'
-              - 'cloudfront:GetDistributionConfig'
-              - 'cloudfront:ListDistributions'
-              - 'cloudfront:TagResource'
-              - 'cloudfront:CreateCachePolicy'
-              - 'cloudfront:UpdateCachePolicy'
-              - 'cloudfront:DeleteCachePolicy'
-              - 'cloudfront:GetCachePolicy'
-              - 'cloudfront:CreateOriginRequestPolicy'
-              - 'cloudfront:UpdateOriginRequestPolicy'
-              - 'cloudfront:DeleteOriginRequestPolicy'
-              - 'cloudfront:GetOriginRequestPolicy'
-              - 'cloudfront:CreateResponseHeadersPolicy'
-              - 'cloudfront:UpdateResponseHeadersPolicy'
-              - 'cloudfront:DeleteResponseHeadersPolicy'
-              - 'cloudfront:GetResponseHeadersPolicy'
-              - 'cloudfront:CreateInvalidation'
-            Resource: '*'
 
           # ACM Certificate permissions
           - Sid: ACMCertificateManagement

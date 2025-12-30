@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Route 53 DNS Records for Kraken Proxy API (Alias to API Gateway)'
+Description: 'Route 53 DNS Records for Rookie API (Alias to API Gateway)'
 
 Parameters:
   DomainName:

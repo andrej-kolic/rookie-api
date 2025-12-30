@@ -13,6 +13,6 @@ if (process.env.AWS_LAMBDA_FUNCTION_NAME === undefined) {
 // Only start server if not running in Lambda
 if (process.env.AWS_LAMBDA_FUNCTION_NAME === undefined) {
   app.listen(config.port, () => {
-    console.log(`Kraken Proxy listening at http://localhost:${config.port}`);
+    console.log(`Rookie API listening at http://localhost:${config.port}`);
   });
 }

@@ -1,5 +1,5 @@
-name: 'Deploy Kraken Proxy'
-description: 'Composite action for deploying Kraken Proxy infrastructure or updating Lambda code'
+name: 'Deploy Rookie API'
+description: 'Composite action for deploying Rookie API infrastructure or updating Lambda code'
 
 inputs:
   action:
