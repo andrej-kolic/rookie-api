@@ -29,7 +29,7 @@ All settings in `deploy-config.json`:
 
 ```json
 {
-  "project_name": "kraken-proxy",
+  "project_name": "rookie-api",
   "region": "us-east-1",
   "oidc": {
     "provider_arn": "",
@@ -39,7 +39,7 @@ All settings in `deploy-config.json`:
   },
   "parameters": {
     "DomainName": "example.com",
-    "SubDomain": "kraken",
+    "SubDomain": "rookie-api",
     "HostedZoneId": "Z123...",
     "NodeRuntime": "nodejs20.x",
     "LambdaMemory": "512",
@@ -54,7 +54,7 @@ All settings in `deploy-config.json`:
 
 - `ProjectName`: Used for resource naming (lowercase, hyphenated, 3-20 chars)
 - `DomainName`: Apex domain (example.com)
-- `SubDomain`: Prefix for full domain (kraken → kraken.example.com)
+- `SubDomain`: Prefix for full domain (rookie-api → rookie-api.example.com)
 - `NodeRuntime`: Lambda Node.js version
 - `LambdaMemory`: Memory allocation in MB (affects cost and performance)
 - `LambdaTimeout`: Max execution time in seconds
@@ -89,7 +89,7 @@ One-time GitHub OIDC setup (account-level, creates IAM role for GitHub Actions, 
 
 - Uses `jq` to parse `deploy-config.json`
 - Creates template package bucket: `{project_name}-cf-templates-{account-id}-{region}`
-- Stack naming: `{project_name}` (e.g., `kraken-proxy`)
+- Stack naming: `{project_name}` (e.g., `rookie-api`)
 - OIDC stack naming: `{project_name}-github-oidc`
 - Lambda build: Compiles TypeScript from `apps/kraken-proxy`, bundles with dependencies
 
@@ -126,7 +126,7 @@ templates/
 
 ### Resource Naming Pattern
 
-- **Stacks**: `{ProjectName}` (e.g., `kraken-proxy`)
+- **Stacks**: `{ProjectName}` (e.g., `rookie-api`)
 - **Lambda Function**: `{ProjectName}-api`
 - **IAM Roles**: `{ProjectName}-lambda-role`, `{ProjectName}-github-actions-role`
 - **Log Group**: `/aws/lambda/{ProjectName}-api`
@@ -225,7 +225,7 @@ Uses `@vendia/serverless-express` to wrap Express app:
 ## OIDC Reuse Strategy
 
 - **Provider**: Reuses existing (one per AWS account)
-- **Role**: New role specific to kraken-proxy with Lambda/CloudFront permissions
+- **Role**: New role specific to rookie-api with Lambda/CloudFront permissions
 - **Secret name**: `AWS_ROLE_ARN` (different from static site)
 
 ## Security Considerations

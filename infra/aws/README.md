@@ -30,7 +30,7 @@ Edit [`deploy-config.json`](deploy-config.json):
 
 ```json
 {
-  "project_name": "kraken-proxy",
+  "project_name": "rookie-api",
   "region": "us-east-1",
   "oidc": {
     "provider_arn": "",
@@ -40,7 +40,7 @@ Edit [`deploy-config.json`](deploy-config.json):
   },
   "parameters": {
     "DomainName": "yourdomain.com",
-    "SubDomain": "kraken",
+    "SubDomain": "rookie-api",
     "HostedZoneId": "Z1234567890ABC",
     "NodeRuntime": "nodejs20.x",
     "LambdaMemory": "512",
@@ -52,7 +52,7 @@ Edit [`deploy-config.json`](deploy-config.json):
 **Key parameters**:
 
 - `DomainName`: Your apex domain (e.g., `example.com`)
-- `SubDomain`: Subdomain prefix (creates `kraken.example.com`)
+- `SubDomain`: Subdomain prefix (creates `rookie-api.example.com`)
 - `HostedZoneId`: Route 53 hosted zone ID for your domain
 - `LambdaMemory`: Memory allocation (affects cost and performance)
 
@@ -236,12 +236,12 @@ infra/aws/
 ```bash
 # Get log group name
 aws cloudformation describe-stacks \
-  --stack-name kraken-proxy \
+  --stack-name rookie-api \
   --query 'Stacks[0].Outputs[?OutputKey==`LogGroupName`].OutputValue' \
   --output text
 
 # Tail logs
-aws logs tail /aws/lambda/kraken-proxy-api --follow
+aws logs tail /aws/lambda/rookie-api-api --follow
 ```
 
 ### Test Lambda Function
@@ -249,7 +249,7 @@ aws logs tail /aws/lambda/kraken-proxy-api --follow
 ```bash
 # Get function URL
 FUNCTION_URL=$(aws cloudformation describe-stacks \
-  --stack-name kraken-proxy \
+  --stack-name rookie-api \
   --query 'Stacks[0].Outputs[?OutputKey==`FunctionUrl`].OutputValue' \
   --output text)
 
@@ -261,7 +261,7 @@ curl "${FUNCTION_URL}health"
 
 ```bash
 # Get custom domain URL
-curl https://kraken.yourdomain.com/health
+curl https://rookie-api.yourdomain.com/health
 ```
 
 ## 🛠️ Troubleshooting
@@ -293,7 +293,7 @@ ls -la dist/
 ```bash
 # View CloudFormation events
 aws cloudformation describe-stack-events \
-  --stack-name kraken-proxy \
+  --stack-name rookie-api \
   --max-items 20
 ```
 
@@ -328,16 +328,16 @@ To delete all resources:
 ```bash
 # Delete main stack (deletes nested stacks)
 aws cloudformation delete-stack \
-  --stack-name kraken-proxy \
+  --stack-name rookie-api \
   --region us-east-1
 
 # Delete OIDC stack (optional, reusable)
 aws cloudformation delete-stack \
-  --stack-name kraken-proxy-github-oidc \
+  --stack-name rookie-api-github-oidc \
   --region us-east-1
 
 # Delete template bucket
-aws s3 rb s3://kraken-proxy-cf-templates-ACCOUNT_ID-us-east-1 --force
+aws s3 rb s3://rookie-api-cf-templates-ACCOUNT_ID-us-east-1 --force
 ```
 
 ## 📚 Additional Resources
